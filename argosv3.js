@@ -1,0 +1,138 @@
+(function () {
+    class ArgosV3 {
+        build() {
+            this.userid = sessionStorage.getItem("argosv3_userid")
+            this.pageview()
+
+            if (sessionStorage.getItem("argosv3_session_ok") == null) {
+                this.session()
+                sessionStorage.setItem("argosv3_session_ok", true)
+            }
+        }
+
+        sender(url, data) {
+            var blob = new Blob([data], { type: 'application/json; charset=UTF-8' });
+            navigator.sendBeacon(url, blob)
+        }
+
+        getDevice() {
+            if (screen.width >= 1200) {
+                return "3" // desktop
+            } else if (screen.width < 768) {
+                return "1" // mobile
+            } else {
+                return "2" // tablet
+            }
+        }
+
+        getParams() {
+            let queryDict = {}
+            location.search.substr(1).split("&").forEach(function (item) {
+                queryDict[item.split("=")[0]] = item.split("=")[1]
+            })
+
+            return queryDict;
+        }
+
+        session() {
+            let urlParams = this.getParams()
+
+            var params = {
+                "1": this.getDevice()
+            }
+
+            if (urlParams['utm_source'] != undefined) {
+                params['2'] = urlParams['utm_source']
+            }
+            if (urlParams['utm_medium'] != undefined) {
+                params['3'] = urlParams['utm_medium']
+            }
+            if (urlParams['utm_campaign'] != undefined) {
+                params['4'] = urlParams['utm_campaign']
+            }
+            if (urlParams['utm_content'] != undefined) {
+                params['10'] = urlParams['utm_content']
+            }
+            if (urlParams['utm_term'] != undefined) {
+                params['11'] = urlParams['utm_term']
+            }
+            if (urlParams['gclid'] != undefined) {
+                params['5'] = urlParams['gclid']
+            }
+            if (urlParams['fbclid'] != undefined) {
+                params['6'] = urlParams['fbclid']
+            }
+
+            if (document.referrer != '') {
+                params['9'] = document.referrer
+            } else {
+                params['9'] = 'direct'
+            }
+
+            var data = JSON.stringify({
+                "type": 2,
+                "token": parseInt(this.userid),
+                "data": params
+            });
+
+            this.sender('https://argosv3.servehttp.com/event/', data)
+        }
+
+        pageview() {
+
+            let domain = window.location.hostname,
+                path = window.location.pathname;
+
+            var data = JSON.stringify({
+                "type": 1,
+                "token": parseInt(this.userid),
+                "data": {
+                    "7": domain,
+                    "8": path
+                }
+            });
+
+            this.sender('https://argosv3.servehttp.com/event/', data);
+        }
+    }
+    window.ArgosV3 = ArgosV3;
+})();
+
+function loadPlugin() {
+    window.ArgosV3 = new ArgosV3();
+    window.ArgosV3.build();
+}
+
+function argosSetUser(userid) {
+    sessionStorage.setItem("argosv3_userid", userid)
+    loadPlugin()
+}
+
+function loadUserid() {
+    var argosScript = document.createElement('script');
+    argosScript.setAttribute('src', 'https://argosv3.servehttp.com/central.js');
+    document.head.appendChild(argosScript);
+}
+
+if (sessionStorage.getItem("argosv3_userid") == null) {
+    loadUserid();
+} else {
+    loadPlugin()
+}
+
+// EventType
+// 1 - pageview
+// 2 - session
+
+// Fieldlist
+// 1 - device (1-mobile / 2-tablet / 3-computer) (session)
+// 2 - utm_source (session)
+// 3 - utm_medium (session)
+// 4 - utm_campaign (session)
+// 5 - gclid (session)
+// 6 - fbclid (session)
+// 7 - domain (pageview)
+// 8 - path (pageview)
+// 9 - referer (session)
+// 10 - utm_content (session)
+// 11 - utm_term (session)
