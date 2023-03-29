@@ -1,18 +1,27 @@
+if (window.location.hostname == '127.0.0.1') {
+    window.argosv3_api = "http://localhost:3999"
+    console.log('run local')
+} else {
+    window.argosv3_api = "https://argosv3.servehttp.com"
+}
+
+let storageToken = "argosv3_v1_";
+
 (function () {
     class ArgosV3 {
         build() {
-            this.userid = sessionStorage.getItem("argosv3_userid")
+            this.userid = sessionStorage.getItem(storageToken + "userid")
             this.pageview()
 
-            if (sessionStorage.getItem("argosv3_session_ok") == null) {
+            if (sessionStorage.getItem(storageToken + "session_ok") == null) {
                 this.session()
-                sessionStorage.setItem("argosv3_session_ok", true)
+                sessionStorage.setItem(storageToken + "session_ok", true)
             }
         }
 
         sender(url, data) {
             var blob = new Blob([data], { type: 'application/json; charset=UTF-8' });
-            navigator.sendBeacon(url, blob)
+            navigator.sendBeacon(window.argosv3_api + url, blob)
         }
 
         getDevice() {
@@ -32,6 +41,58 @@
             })
 
             return queryDict;
+        }
+
+        userUpdate() {
+            
+            var data = JSON.stringify({
+                "alias": window.argosIdentify[0],
+                "data": window.argosIdentify[1]
+            });
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    console.log(this.responseText);
+                }
+            });
+
+            xhr.open("POST", window.argosv3_api + "/user/");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.send(data);
+        }
+
+        identify() {
+
+            if (window.argosIdentify.length > 0) {
+                console.log(window.argosIdentify[0])
+
+                var data = JSON.stringify({
+                    "token": parseInt(this.userid),
+                    "alias": window.argosIdentify[0]
+                });
+
+                var xhr = new XMLHttpRequest();
+                xhr.withCredentials = true;
+
+                xhr.addEventListener("readystatechange", function () {
+                    if (this.readyState === 4) {
+                        console.log(this.responseText);
+                        if (window.argosIdentify.length > 1) {
+                            console.log(window.argosIdentify[1])
+                        }
+                    }
+                });
+
+                xhr.open("POST", window.argosv3_api + "/identify/");
+                xhr.setRequestHeader("Content-Type", "application/json");
+
+                xhr.send(data);
+
+            }
         }
 
         session() {
@@ -75,7 +136,7 @@
                 "data": params
             });
 
-            this.sender('https://argosv3.servehttp.com/event/', data)
+            this.sender('/event/', data)
         }
 
         pageview() {
@@ -92,7 +153,9 @@
                 }
             });
 
-            this.sender('https://argosv3.servehttp.com/event/', data);
+            this.sender('/event/', data);
+
+            this.identify()
         }
     }
     window.ArgosV3 = ArgosV3;
@@ -104,17 +167,17 @@ function loadPlugin() {
 }
 
 function argosSetUser(userid) {
-    sessionStorage.setItem("argosv3_userid", userid)
+    sessionStorage.setItem(storageToken + "userid", userid)
     loadPlugin()
 }
 
 function loadUserid() {
     var argosScript = document.createElement('script');
-    argosScript.setAttribute('src', 'https://argosv3.servehttp.com/central.js');
+    argosScript.setAttribute('src', window.argosv3_api + '/central.js');
     document.head.appendChild(argosScript);
 }
 
-if (sessionStorage.getItem("argosv3_userid") == null) {
+if (sessionStorage.getItem(storageToken + "userid") == null) {
     loadUserid();
 } else {
     loadPlugin()
@@ -136,3 +199,4 @@ if (sessionStorage.getItem("argosv3_userid") == null) {
 // 9 - referer (session)
 // 10 - utm_content (session)
 // 11 - utm_term (session)
+// 12 - IP (session)
