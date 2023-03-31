@@ -13,13 +13,29 @@
     <a href="/page2.html">Página de teste de URL</a>
 </body>
 <script>
-    argosIdentify = [
-        'int_12345',
-        {
-            "1": "dado1",
-            "2": "dado2"
-        }
-    ]
+    if (sessionStorage.getItem("argos_identify_user") == null) {
+        console.log('registra')
+        // argosIdentify = [
+        //     'int_' + dataLayer[0].userId,
+        //     {
+        //         "1": dataLayer[0].userId,
+        //         "2": dataLayer[0].userEmail,
+        //         "3": dataLayer[0].seller,
+        //         "4": dataLayer[0].created_at,
+        //         "5": dataLayer[0].first_sale_date
+        //     }
+        // ]
+
+        argosIdentify = [
+            'int_123',
+            {
+                "1": "item 2",
+                "2": "item 4"
+            }
+        ]
+
+        // sessionStorage.setItem("argos_identify_user", true)
+    }
 </script>
 <script src="argosv3.js"></script>
 

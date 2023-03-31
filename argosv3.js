@@ -11,6 +11,7 @@ let storageToken = "argosv3_v1_";
     class ArgosV3 {
         build() {
             this.userid = sessionStorage.getItem(storageToken + "userid")
+            this.identifyData = window.argosIdentify || []
             this.pageview()
 
             if (sessionStorage.getItem(storageToken + "session_ok") == null) {
@@ -67,7 +68,9 @@ let storageToken = "argosv3_v1_";
 
         identify() {
 
-            if (window.argosIdentify.length > 0) {
+            console.log(this.identifyData)
+
+            if (this.identifyData.length > 0) {
                 console.log(window.argosIdentify[0])
 
                 var data = JSON.stringify({
@@ -78,11 +81,15 @@ let storageToken = "argosv3_v1_";
                 var xhr = new XMLHttpRequest();
                 xhr.withCredentials = true;
 
+                var identifyData = this.identifyData
+
+                var callUpdateUser = this.userUpdate.bind(this);
+
                 xhr.addEventListener("readystatechange", function () {
                     if (this.readyState === 4) {
                         console.log(this.responseText);
-                        if (window.argosIdentify.length > 1) {
-                            console.log(window.argosIdentify[1])
+                        if (identifyData.length > 1) {
+                            callUpdateUser()
                         }
                     }
                 });
