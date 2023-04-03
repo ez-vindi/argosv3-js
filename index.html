@@ -48,23 +48,4 @@
     }
 </script>
 <script src="argosv3.js"></script>
-
-<script>
-
-    document.addEventListener('submit', function (e) {
-        e.preventDefault()
-        var formData = JSON.stringify({
-            "type": 3,
-            "token": parseInt(ArgosV3.userid),
-            "data": {
-                "13": e.target.action,
-                "14": e.target.id
-            }
-        });
-
-        ArgosV3.sender('/event/', formData)
-    }, false);
-
-</script>
-
 </html>

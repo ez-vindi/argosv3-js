@@ -66,11 +66,7 @@ let storageToken = "argosv3_v1_";
             var xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
 
-            xhr.addEventListener("readystatechange", function () {
-                if (this.readyState === 4) {
-                    console.log(this.responseText);
-                }
-            });
+            xhr.addEventListener("readystatechange", function () {});
 
             xhr.open("POST", window.argosv3_api + "/user/");
             xhr.setRequestHeader("Content-Type", "application/json");
@@ -80,10 +76,7 @@ let storageToken = "argosv3_v1_";
 
         identify() {
 
-            console.log(this.identifyData)
-
             if (this.identifyData.length > 0) {
-                console.log(window.argosIdentify[0])
 
                 var data = JSON.stringify({
                     "token": parseInt(this.userid),
@@ -99,7 +92,6 @@ let storageToken = "argosv3_v1_";
 
                 xhr.addEventListener("readystatechange", function () {
                     if (this.readyState === 4) {
-                        console.log(this.responseText);
                         if (identifyData.length > 1) {
                             callUpdateUser()
                         }
@@ -201,6 +193,20 @@ if (sessionStorage.getItem(storageToken + "userid") == null) {
 } else {
     loadPlugin()
 }
+
+// Para registrar todos os envios de formularios
+document.addEventListener('submit', function (e) {
+    var formData = JSON.stringify({
+        "type": 3,
+        "token": parseInt(ArgosV3.userid),
+        "data": {
+            "13": e.target.action,
+            "14": e.target.id
+        }
+    });
+
+    ArgosV3.sender('/event/', formData)
+}, false);
 
 // ===== EventType
 // 1 - pageview
