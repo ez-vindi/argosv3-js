@@ -196,12 +196,16 @@ if (sessionStorage.getItem(storageToken + "userid") == null) {
 
 // Para registrar todos os envios de formularios
 document.addEventListener('submit', function (e) {
+
+    let url = window.location.hostname + window.location.pathname
+
     var formData = JSON.stringify({
         "type": 3,
         "token": parseInt(ArgosV3.userid),
         "data": {
             "13": e.target.action,
-            "14": e.target.id
+            "14": e.target.id,
+            "15": url
         }
     });
 
@@ -231,3 +235,4 @@ document.addEventListener('submit', function (e) {
 
 // 13 - Form Action (form)
 // 14 - Form ID (form)
+// 15 - URL of Form (form)
