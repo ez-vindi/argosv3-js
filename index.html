@@ -11,6 +11,16 @@
 <body>
     <h1>Página de teste inicial</h1>
     <a href="/page2.html">Página de teste de URL</a>
+
+    <form action="/testpage" method="get">
+        <input type="email" name="emailname" id="emailid" value="email1">
+        <input type="submit" value="Enviar">
+    </form>
+    <br>
+    <form action="/testpage" method="get">
+        <input type="email" name="emailname" id="emailid" value="email 2">
+        <input type="submit" value="Enviar">
+    </form>
 </body>
 <script>
     if (sessionStorage.getItem("argos_identify_user") == null) {
@@ -38,5 +48,4 @@
     }
 </script>
 <script src="argosv3.js"></script>
-
 </html>

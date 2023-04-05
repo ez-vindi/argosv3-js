@@ -9,9 +9,21 @@ let storageToken = "argosv3_v1_";
 
 (function () {
     class ArgosV3 {
+        insertInput() {
+            var allForms = document.querySelectorAll('form')
+            allForms.forEach(element => {  
+                var inputArgos = document.createElement('input');
+                inputArgos.setAttribute('name', 'argosid_teste');
+                inputArgos.value = this.userid;
+                inputArgos.setAttribute('type', 'hidden');
+                element.appendChild(inputArgos);
+            });
+        }
+
         build() {
             this.userid = sessionStorage.getItem(storageToken + "userid")
             this.identifyData = window.argosIdentify || []
+            this.insertInput()
             this.pageview()
 
             if (sessionStorage.getItem(storageToken + "session_ok") == null) {
@@ -54,11 +66,7 @@ let storageToken = "argosv3_v1_";
             var xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
 
-            xhr.addEventListener("readystatechange", function () {
-                if (this.readyState === 4) {
-                    console.log(this.responseText);
-                }
-            });
+            xhr.addEventListener("readystatechange", function () {});
 
             xhr.open("POST", window.argosv3_api + "/user/");
             xhr.setRequestHeader("Content-Type", "application/json");
@@ -68,10 +76,7 @@ let storageToken = "argosv3_v1_";
 
         identify() {
 
-            console.log(this.identifyData)
-
             if (this.identifyData.length > 0) {
-                console.log(window.argosIdentify[0])
 
                 var data = JSON.stringify({
                     "token": parseInt(this.userid),
@@ -87,7 +92,6 @@ let storageToken = "argosv3_v1_";
 
                 xhr.addEventListener("readystatechange", function () {
                     if (this.readyState === 4) {
-                        console.log(this.responseText);
                         if (identifyData.length > 1) {
                             callUpdateUser()
                         }
@@ -190,20 +194,45 @@ if (sessionStorage.getItem(storageToken + "userid") == null) {
     loadPlugin()
 }
 
-// EventType
+// Para registrar todos os envios de formularios
+document.addEventListener('submit', function (e) {
+
+    let url = window.location.hostname + window.location.pathname
+
+    var formData = JSON.stringify({
+        "type": 3,
+        "token": parseInt(ArgosV3.userid),
+        "data": {
+            "13": e.target.action,
+            "14": e.target.id,
+            "15": url
+        }
+    });
+
+    ArgosV3.sender('/event/', formData)
+}, false);
+
+// ===== EventType
 // 1 - pageview
 // 2 - session
+// 3 - form
 
-// Fieldlist
+// ===== Fieldlist
+
+// 7 - domain (pageview)
+// 8 - path (pageview)
+
 // 1 - device (1-mobile / 2-tablet / 3-computer) (session)
 // 2 - utm_source (session)
 // 3 - utm_medium (session)
 // 4 - utm_campaign (session)
 // 5 - gclid (session)
 // 6 - fbclid (session)
-// 7 - domain (pageview)
-// 8 - path (pageview)
 // 9 - referer (session)
 // 10 - utm_content (session)
 // 11 - utm_term (session)
 // 12 - IP (session)
+
+// 13 - Form Action (form)
+// 14 - Form ID (form)
+// 15 - URL of Form (form)
