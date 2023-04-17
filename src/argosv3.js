@@ -112,8 +112,13 @@ let storageToken = "argosv3_v1_";
         session() {
             let urlParams = this.getParams()
 
+            let domain = window.location.hostname,
+                path = window.location.pathname;
+
             var params = {
-                "1": this.getDevice()
+                "1": this.getDevice(),
+                "18": domain,
+                "19": path
             }
 
             if (urlParams['utm_source'] != undefined) {
@@ -236,6 +241,8 @@ document.addEventListener('submit', function (e) {
 // 10 - utm_content (session)
 // 11 - utm_term (session)
 // 12 - IP (session)
+// 18 - domain (session)
+// 19 - path (session)
 
 // 13 - Form Action (form)
 // 14 - Form ID (form)
@@ -244,3 +251,4 @@ document.addEventListener('submit', function (e) {
 // 16 - campanha (email)
 // 17 - email (email)
 
+// ultimo = 19 - path (session)
