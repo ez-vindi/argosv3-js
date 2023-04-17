@@ -21,6 +21,8 @@
         <input type="email" name="emailname" id="emailid" value="email 2">
         <input type="submit" value="Enviar">
     </form>
+    <img src="http://localhost:3998/pixel.gif?data=16:teste-de-campanha;17:email@teste.com" alt="">
+    <img src="https://argosv3.servehttp.com/pixel.gif?data=16:site-externo">
 </body>
 <script>
     if (sessionStorage.getItem("argos_identify_user") == null) {
@@ -36,16 +38,37 @@
         //     }
         // ]
 
-        argosIdentify = [
-            'int_123',
-            {
-                "1": "item 2",
-                "2": "item 4"
-            }
-        ]
+        // argosIdentify = [
+        //     'int_123',
+        //     {
+        //         "1": "item 2",
+        //         "2": "item 4"
+        //     }
+        // ]
 
         // sessionStorage.setItem("argos_identify_user", true)
     }
 </script>
+
+<script>
+    // try {
+    //     var merchantId = document.getElementById('main_navbar').getAttribute('data-merchant-id')
+    //     if(merchantId > 0){
+    //         argosIdentify = ['vr_' + merchantId]
+    //     }    
+    // } catch (error) {}
+    
+    argosOnlySession =  true
+</script>
+
 <script src="argosv3.js"></script>
 </html>
+
+ecosystem.config.js
+
+<!-- module.exports = {
+    apps : [{
+      name   : "argosv3-app1",
+      script : "./index.js"
+    }]
+} -->
