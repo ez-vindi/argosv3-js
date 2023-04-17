@@ -1,0 +1,26 @@
+{
+  "name": "argosv3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "argosv3.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ezanatta-vindi/argosv3-js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ezanatta-vindi/argosv3-js/issues"
+  },
+  "homepage": "https://github.com/ezanatta-vindi/argosv3-js#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify": "^3.0.2"
+  }
+}
