@@ -26,7 +26,7 @@ let storageToken = "argosv3_v1_";
             this.argosOnlySession = window.argosOnlySession || false
             this.insertInput()
 
-            if(argosOnlySession == false){
+            if(this.argosOnlySession == false){
                 this.pageview()
             }
 
