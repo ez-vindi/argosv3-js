@@ -2,10 +2,10 @@ if (window.location.hostname == '127.0.0.1') {
     window.argosv3_api = "http://localhost:3998"
     console.log('run local')
 } else {
-    window.argosv3_api = "https://argosv3.servehttp.com"
+    window.argosv3_api = "https://argosv3.analytics.vindi.com.br"
 }
 
-let storageToken = "argosv3_v1_";
+let storageToken = "argosv3_v3_";
 
 (function () {
     class ArgosV3 {
@@ -159,7 +159,6 @@ let storageToken = "argosv3_v1_";
         }
 
         pageview() {
-
             let domain = window.location.hostname,
                 path = window.location.pathname;
 
