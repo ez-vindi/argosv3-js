@@ -14,7 +14,7 @@ const rename = require('gulp-rename');
 gulp.task('minify', function() {
   return gulp.src('src/argosv3.js')
     .pipe(uglify())
-    // .pipe(rename('argosv3.min.js'))
+    .pipe(rename('argosv3.min.js'))
     // .pipe(gulp.dest('./dist'));
     .pipe(gulp.dest('./'));
 });

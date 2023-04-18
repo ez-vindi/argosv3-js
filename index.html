@@ -51,14 +51,15 @@
 </script>
 
 <script>
-    // try {
-    //     var merchantId = document.getElementById('main_navbar').getAttribute('data-merchant-id')
-    //     if(merchantId > 0){
-    //         argosIdentify = ['vr_' + merchantId]
-    //     }    
-    // } catch (error) {}
+    try {
+        var merchantId = document.getElementById('main_navbar').getAttribute('data-merchant-id')
+        if(merchantId > 0){
+            argosIdentify = ['vr_' + merchantId]
+        }    
+    } catch (error) {}
     
-    argosOnlySession =  true
+    argosOnlySession =  true // default false
+    argosNoForms =  true // default false
 </script>
 
 <script src="argosv3.js"></script>
