@@ -26,11 +26,11 @@ argosNoForms = true // default false
 ```
 
 ## Identificar usuários logados
-Para identificar um usuário logado, basta criar uma variavel **argosIdentify** e inserir os dados do usuário.
+Para identificar um usuário logado, basta criar uma variável **argosIdentify** e inserir os dados do usuário.
 
-A variavel argosIdentify deve receber um array[] com os seguintes valores:
+A variável argosIdentify deve receber um array[] com os seguintes valores:
 
-1. String com identificador unico do usuário
+1. String com identificador único do usuário
 2. Objeto{} com os dados sobre o usuário.
 
 ```javascript
@@ -60,7 +60,7 @@ argosIdentify = [
 ]
 ```
 
-#### Vindi Recorrencia
+#### Vindi Recorrência
 
 ```javascript
 try {
@@ -76,9 +76,9 @@ try {
 <img src="https://argosv3.analytics.vindi.com.br/pixel.gif?data=1:valor1;2:valor2" referrerpolicy="no-referrer-when-downgrade">
 ```
 
-O parametro **data** é por onde são enviadas os dados. O nome dos campos são definidos por ids e o valor separado por **":"**. Os dados são dividos por **";"**. Em caso de duvidas, consulte o exemplo acima.
+O parâmetro **data** é por onde são enviados os dados. O nome dos campos são definidos por ids e o valor separado por **":"**. Os dados são divididos por **";"**. Em caso de dúvidas, consulte o exemplo acima.
 
-## Referencia de parametros da API
+## Referência de parâmetros da API
 
 ### EventType
 1. pageview

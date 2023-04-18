@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArgosV3 Front - Demos</title>
+</head>
+
+<body>
+    <h1>Página de teste inicial</h1>
+    <a href="/page2.html">Página de teste de URL</a>
+
+    <form action="/testpage" method="get">
+        <input type="email" name="emailname" id="emailid" value="email1">
+        <input type="submit" value="Enviar">
+    </form>
+    <br>
+    <form action="/testpage" method="get">
+        <input type="email" name="emailname" id="emailid" value="email 2">
+        <input type="submit" value="Enviar">
+    </form>
+    <img src="http://localhost:3998/pixel.gif?data=16:teste-de-campanha;17:email@teste.com" alt="">
+    <img src="https://argosv3.servehttp.com/pixel.gif?data=16:site-externo">
+</body>
+<script>
+    if (sessionStorage.getItem("argos_identify_user") == null) {
+        console.log('registra')
+        // argosIdentify = [
+        //     'int_' + dataLayer[0].userId,
+        //     {
+        //         "1": dataLayer[0].userId,
+        //         "2": dataLayer[0].userEmail,
+        //         "3": dataLayer[0].seller,
+        //         "4": dataLayer[0].created_at,
+        //         "5": dataLayer[0].first_sale_date
+        //     }
+        // ]
+
+        // argosIdentify = [
+        //     'int_123',
+        //     {
+        //         "1": "item 2",
+        //         "2": "item 4"
+        //     }
+        // ]
+
+        // sessionStorage.setItem("argos_identify_user", true)
+    }
+</script>
+
+<script>
+    try {
+        var merchantId = document.getElementById('main_navbar').getAttribute('data-merchant-id')
+        if(merchantId > 0){
+            argosIdentify = ['vr_' + merchantId]
+        }    
+    } catch (error) {}
+    
+    argosOnlySession =  true // default false
+    argosNoForms =  true // default false
+</script>
+
+<script src="argosv3.js"></script>
+</html>
+
+ecosystem.config.js
+
+<!-- module.exports = {
+    apps : [{
+      name   : "argosv3-app1",
+      script : "./index.js"
+    }]
+} -->
