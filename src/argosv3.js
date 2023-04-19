@@ -202,9 +202,7 @@ if (sessionStorage.getItem(storageToken + "userid") == null) {
 }
 
 if (window.argosNoForms != true) {
-
     document.addEventListener('submit', function (e) {
-
         let url = window.location.hostname + window.location.pathname
 
         var formData = JSON.stringify({
