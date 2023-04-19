@@ -201,10 +201,8 @@ if (sessionStorage.getItem(storageToken + "userid") == null) {
     loadPlugin()
 }
 
-if (window.argosNoForms == true) {
-    // Para registrar todos os envios de formularios
+if (window.argosNoForms != true) {
     document.addEventListener('submit', function (e) {
-
         let url = window.location.hostname + window.location.pathname
 
         var formData = JSON.stringify({
