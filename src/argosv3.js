@@ -2,16 +2,16 @@ if (window.location.hostname == '127.0.0.1') {
     window.argosv3_api = "http://localhost:3998"
     console.log('run local')
 } else {
-    window.argosv3_api = "https://argosv3.servehttp.com"
+    window.argosv3_api = "https://argosv3.analytics.vindi.com.br"
 }
 
-let storageToken = "argosv3_v1_";
+let storageToken = "argosv3_v3_";
 
 (function () {
     class ArgosV3 {
         insertInput() {
             var allForms = document.querySelectorAll('form')
-            allForms.forEach(element => {  
+            allForms.forEach(element => {
                 var inputArgos = document.createElement('input');
                 inputArgos.setAttribute('name', 'argosid_teste');
                 inputArgos.value = this.userid;
@@ -26,7 +26,7 @@ let storageToken = "argosv3_v1_";
             this.argosOnlySession = window.argosOnlySession || false
             this.insertInput()
 
-            if(this.argosOnlySession == false){
+            if (this.argosOnlySession == false) {
                 this.pageview()
             }
 
@@ -61,7 +61,7 @@ let storageToken = "argosv3_v1_";
         }
 
         userUpdate() {
-            
+
             var data = JSON.stringify({
                 "alias": window.argosIdentify[0],
                 "data": window.argosIdentify[1]
@@ -70,7 +70,7 @@ let storageToken = "argosv3_v1_";
             var xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
 
-            xhr.addEventListener("readystatechange", function () {});
+            xhr.addEventListener("readystatechange", function () { });
 
             xhr.open("POST", window.argosv3_api + "/user/");
             xhr.setRequestHeader("Content-Type", "application/json");
@@ -159,7 +159,6 @@ let storageToken = "argosv3_v1_";
         }
 
         pageview() {
-
             let domain = window.location.hostname,
                 path = window.location.pathname;
 
@@ -202,53 +201,22 @@ if (sessionStorage.getItem(storageToken + "userid") == null) {
     loadPlugin()
 }
 
-// Para registrar todos os envios de formularios
-document.addEventListener('submit', function (e) {
+if (window.argosNoForms == true) {
+    // Para registrar todos os envios de formularios
+    document.addEventListener('submit', function (e) {
 
-    let url = window.location.hostname + window.location.pathname
+        let url = window.location.hostname + window.location.pathname
 
-    var formData = JSON.stringify({
-        "type": 3,
-        "token": parseInt(ArgosV3.userid),
-        "data": {
-            "13": e.target.action,
-            "14": e.target.id,
-            "15": url
-        }
-    });
+        var formData = JSON.stringify({
+            "type": 3,
+            "token": parseInt(ArgosV3.userid),
+            "data": {
+                "13": e.target.action,
+                "14": e.target.id,
+                "15": url
+            }
+        });
 
-    ArgosV3.sender('/event/', formData)
-}, false);
-
-// ===== EventType
-// 1 - pageview
-// 2 - session
-// 3 - form
-// 4 - pixel
-
-// ===== Fieldlist
-
-// 7 - domain (pageview)
-// 8 - path (pageview)
-
-// 1 - device (1-mobile / 2-tablet / 3-computer) (session)
-// 2 - utm_source (session)
-// 3 - utm_medium (session)
-// 4 - utm_campaign (session)
-// 5 - gclid (session)
-// 6 - fbclid (session)
-// 9 - referer (session)
-// 10 - utm_content (session)
-// 11 - utm_term (session)
-// 12 - IP (session)
-// 18 - domain (session)
-// 19 - path (session)
-
-// 13 - Form Action (form)
-// 14 - Form ID (form)
-// 15 - URL of Form (form)
-
-// 16 - campanha (email)
-// 17 - email (email)
-
-// ultimo = 19 - path (session)
+        ArgosV3.sender('/event/', formData)
+    }, false);
+}
