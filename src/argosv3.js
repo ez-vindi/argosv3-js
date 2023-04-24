@@ -13,7 +13,7 @@ let storageToken = "argosv3_v3_";
             var allForms = document.querySelectorAll('form')
             allForms.forEach(element => {
                 var inputArgos = document.createElement('input');
-                inputArgos.setAttribute('name', 'argosid_teste');
+                inputArgos.setAttribute('name', 'argosv3_id');
                 inputArgos.value = this.userid;
                 inputArgos.setAttribute('type', 'hidden');
                 element.appendChild(inputArgos);
