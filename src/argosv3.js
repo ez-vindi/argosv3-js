@@ -26,13 +26,13 @@ let storageToken = "argosv3_v3_";
             this.argosOnlySession = window.argosOnlySession || false
             this.insertInput()
 
-            if (this.argosOnlySession == false) {
-                this.pageview()
-            }
-
             if (sessionStorage.getItem(storageToken + "session_ok") == null) {
                 this.session()
                 sessionStorage.setItem(storageToken + "session_ok", true)
+            }
+
+            if (this.argosOnlySession == false) {
+                this.pageview()
             }
         }
 
@@ -156,6 +156,8 @@ let storageToken = "argosv3_v3_";
             });
 
             this.sender('/event/', data)
+
+            this.identify()
         }
 
         pageview() {
@@ -172,8 +174,6 @@ let storageToken = "argosv3_v3_";
             });
 
             this.sender('/event/', data);
-
-            this.identify()
         }
     }
     window.ArgosV3 = ArgosV3;
